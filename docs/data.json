@@ -1,0 +1,289 @@
+{
+    "project": {
+        "name": "PCGroup jslib API",
+        "version": "2.0"
+    },
+    "files": {
+        "src/waterfall.js": {
+            "name": "src/waterfall.js",
+            "modules": {
+                "Waterfall": 1
+            },
+            "classes": {
+                "Waterfall": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Waterfall": {
+            "name": "Waterfall",
+            "submodules": {},
+            "classes": {
+                "Waterfall": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/waterfall.js",
+            "line": 53,
+            "description": "基于绝对定位的瀑布流（依赖于 jQuery，因 jQ 1.5 在 ie9 下有 bug，应使用 1.6 或以上）\n\n仅适用于列等宽的情况。\n\n允许指定最小列数、最大列数、是否在浏览器窗口缩放的时候进行重排、加载处理等。",
+            "requires": [
+                "jQuery"
+            ]
+        }
+    },
+    "classes": {
+        "Waterfall": {
+            "name": "Waterfall",
+            "shortname": "Waterfall",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Waterfall",
+            "namespace": "",
+            "file": "src/waterfall.js",
+            "line": 53,
+            "description": "基于绝对定位的瀑布流",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "参数配置，新传入的键值对将会覆盖 `defaultOptions` 中对应的项。.",
+                    "type": "JSON"
+                }
+            ],
+            "example": [
+                "\n    \n       var page = 1;\n       var wf = new Waterfall({\n           container: $('#container'),\n           colWidth: 200,\n           maxCol: 5,\n           preDistance: 100,\n           load: function(){\n               // 触发滚动加载时的具体操作\n               // 当前作用域下，this指向正创建的对象\n               var self = this;\n               \n               $.get('more.php', {page: page}, function(data) {\n                   page++;\n\n                   var res = [];\n                       \n                   $.each(data.items, function(i, item){\n                       res.push('<div class=\"item\"><img src=\"' + item.src + '\" width=\"200\" height=\"' + item.h + '\" /></div>');\n                   });\n                   \n                   // 把新增加的项添加进瀑布流并允许下一次加载\n                   self.success(res);\n\n                   if (data.end) {\n                       // 无下一页时结束滚动加载\n                       self.end();\n                       $('#end').show();\n                   };\n               }, 'json');\n           }\n       });\n    "
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/waterfall.js",
+            "line": 15,
+            "description": "默认配置\n\n     container:   {jQ元素}   $('#id'), 直接的元素列表容器，jQuery 对象\n     colWidth:    {Number}   包括 border 在内的可见宽度（不包括 margin），单位是 px\n     minCol:      {Number}   至少要多少列，默认为 1（不做合法性判断，如 -1，0 等，需自行约束）\n     maxCol:      {Number}   最多可以多少列，默认为 10 （可以设为 null 等非 true 值来表示不限制，同不做合法性判断）\n     gapWidth:    {Number}   项与项之间的水平分隔宽度，默认为 15，单位是 px\n     gapHeight:   {Number}   上下项的垂直分隔高度，默认为 15， 单位是 px\n     resizeDelay: {Number}   浏览器窗口缩放时进行调整的延迟时间，默认为 0，单位是 ms\n     laodDelay:   {Number}   滚动加载前的延迟时间，默认是 0，单位是 ms\n     preDistancs: {Number}   距离底部多少像素就开始加载，默认是 100，单位是 px\n     oninit:      {Function} 初始化完毕后的处理函数，默认为 null\n     onbeforeLoad:{Function} 开始滚动加载前的处理函数，默认为 null\n     load:        {Function} 滚动加载的处理函数，默认为null\n     resizeable:  {Boolean}  是否缩放调整，默认为 true\n     onresize:    {Function} 窗口大小调整完毕后的处理函数，可用于对别的元素进行宽度同步等，默认为 null",
+            "itemtype": "property",
+            "name": "defaultOptions",
+            "type": "JSON",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 101,
+            "description": "初始化函数\n\n对参数进行基本的检查。初始化一些数据，设定列表容器的宽高，然后尝试首次请求加载数据",
+            "itemtype": "method",
+            "name": "_init",
+            "access": "private",
+            "tagname": "",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 122,
+            "description": "待应用的元素样式队列",
+            "itemtype": "property",
+            "name": "styleQueue",
+            "type": "JSON",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 132,
+            "description": "瀑布流的状态\n\n              ready:     准备就绪\n              rendering: 渲染中（比如新增加数据的时候）\n              loading:   加载数据中\n              end:       停止加载数据",
+            "itemtype": "property",
+            "name": "state",
+            "type": "String",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 147,
+            "description": "根据窗口宽度、列宽、列间距来确定显示列数，并根据 `minCol` 和 `maxCol` 来进行调整\n\n同时存储到当前对象的 `colCount` 成员中。",
+            "itemtype": "method",
+            "name": "_resetColCount",
+            "access": "private",
+            "tagname": "",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 167,
+            "description": "重设 container 的宽度\n算法：n * colWidth + (n - 1) * gapWidth\n n:           列数\n colWidth:    列宽\n gapWdith:    列间距",
+            "itemtype": "method",
+            "name": "_resetWidth",
+            "access": "private",
+            "tagname": "",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 182,
+            "description": "调用 `_resetColCount` 来重定列数；\n把记录每列高度的数组元素都重置为 0",
+            "itemtype": "method",
+            "name": "_resetColHeightArr",
+            "access": "private",
+            "tagname": "",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 196,
+            "description": "把一系列的项进行定位\n\n处于效率的考虑（js岛和dom岛），先计算好所有元素的位置，用 {jQ化的DOM元素, 位置对象} 的形式保存进 `styleQueue` 数组；\n然后再进行一一进行样式更改\n\n同时，把 `container` 的高度做调整",
+            "itemtype": "method",
+            "name": "layout",
+            "params": [
+                {
+                    "name": "$items",
+                    "description": "待定位的项的DOM数组.",
+                    "type": "Array"
+                }
+            ],
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 224,
+            "description": "在瀑布流中新增一项\n\n算法：调用 getMinHIndex 来获取高度最小的列的索引，\n     然后把该项插入到 container 中；\n     然后调用 _rePosItem 根据列索引来定位；\n     完毕后给该项增加一个 ready 的 class 标志，同时把瀑布流的 state 设为 ready",
+            "itemtype": "method",
+            "name": "addItem",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "待增加的项，类型可以是 html 代码、dom 元素和 jQ 元素对象.",
+                    "type": "Object"
+                }
+            ],
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 244,
+            "description": "计算给定的元素的绝对定位位置\n\n首先找出当前页面高度最小的列的索引（`inx`），然后计算出 `top` 和 `left` 组成的 `pos` 对象，\n然后把该对象和给定的元素组成的新对象 push 进 `styleQueue` 数组中，等待 `layout` 函数调用处理。\n\n同时把列高数组中 inx 处的值增大",
+            "itemtype": "method",
+            "name": "_placeItem",
+            "access": "private",
+            "tagname": "",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 269,
+            "description": "获取高度最小的列的索引（索引从 0 开始）",
+            "itemtype": "method",
+            "name": "getMinHIndex",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 286,
+            "description": "获取所有列的最大高度",
+            "itemtype": "method",
+            "name": "getMaxHeight",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 303,
+            "description": "绑定瀑布流的事件，包括 `resize` 和 `scroll`",
+            "itemtype": "method",
+            "name": "_bind",
+            "access": "private",
+            "tagname": "",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 331,
+            "description": "window resize 时的处理函数",
+            "itemtype": "method",
+            "name": "_resize",
+            "access": "private",
+            "tagname": "",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 349,
+            "description": "具体的 resize 处理函数\n\n需要重设列数、列高和 container 宽度，\n然后把每一项进行遍历来重定位，\n然后尝试加载\n\n这里要求每一项是 container 的直接子元素",
+            "itemtype": "method",
+            "name": "doResize",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 372,
+            "description": "触发加载新内容\n\n当 state 为 ready 并且滚动到底部或没出现竖向滚动条时尝试加载",
+            "itemtype": "method",
+            "name": "_load",
+            "access": "private",
+            "tagname": "",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 392,
+            "description": "调用配置参数中传入的 load 函数\n\n执行前先把 state 设为 loading，需要在加载完成后调用 `this.success()` 来允许下一次加载或 `this.end()` 来结束滚动加载。",
+            "itemtype": "method",
+            "name": "doLoad",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 411,
+            "description": "初始化的时候尝试加载",
+            "itemtype": "method",
+            "name": "_firstLoad",
+            "access": "private",
+            "tagname": "",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 422,
+            "description": "新内容请求成功后的清理函数\n\n允许传入一个数组，数组元素是瀑布流每项的内容，\n这样可以在这里实现添加到列表的功能而不必在 load 函数中手动调用 addItem 方法\n\n完毕后把 state 设为 ready",
+            "itemtype": "method",
+            "name": "success",
+            "params": [
+                {
+                    "name": "itemsArr",
+                    "description": "待添加进瀑布流的项组成的数组，项可以是 HTML 代码，可以是 DOM 元素，也可以是 jQ 元素对象",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "class": "Waterfall",
+            "module": "Waterfall"
+        },
+        {
+            "file": "src/waterfall.js",
+            "line": 442,
+            "description": "结束滚动加载\n\n将把 `state` 设为 `\"end\"`，并且移除 `scroll` 事件",
+            "itemtype": "method",
+            "name": "end",
+            "class": "Waterfall",
+            "module": "Waterfall"
+        }
+    ]
+}

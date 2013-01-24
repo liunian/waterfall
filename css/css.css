@@ -1,0 +1,30 @@
+.container{position:relative; margin:0 auto; padding:0; border:1px solid red;}
+.container .item{position:absolute; margin:0; padding:0; 
+    opacity: 0;
+    -webkit-transform: translateY(50px);
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transform: translateY(50px);
+    -moz-transition: opacity 1s ease-in-out;
+    -o-transform: translateY(50px);
+    -o-transition: opacity 1s ease-in-out;
+    -ms-transform: translateY(50px);
+    -ms-transition: opacity 1s ease-in-out;
+    transform: translateY(50px);
+    transition: opacity 1s ease-in-out;    
+}
+.container .item.ready {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -webkit-transition: opacity 1s ease-in-out, -webkit-transform 700ms ease-in-out;
+    -moz-transform: translateY(0);
+    -moz-transition: opacity 1s ease-in-out, -moz-transform 700ms ease-in-out, left 700ms ease-in-out, top 700ms ease-in-out;
+    -o-transform: translateY(0);
+    -o-transition: opacity 1s ease-in-out, -o-transform 700ms ease-in-out, left 700ms ease-in-out, top 700ms ease-in-out;
+    -ms-transform: translateY(0);
+    -ms-transition: opacity 1s ease-in-out, -ms-transform 700ms ease-in-out, left 700ms ease-in-out, top 700ms ease-in-out;
+    transform: translateY(0);
+    transition: opacity 1s ease-in-out, transform 700ms ease-in-out, left 700ms ease-in-out, top 700ms ease-in-out;
+}
+/*
+*html, *body{height:100%;}
+*/

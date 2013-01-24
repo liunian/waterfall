@@ -1,0 +1,7 @@
+{
+    "name": "PCGroup jslib API",
+    "version": "2.0",
+    "options": {
+        "outdir": "docs"
+    }
+}

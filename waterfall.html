@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>瀑布流</title>
+    <link rel="stylesheet" type="text/css" href="css/css.css" />
+</head>
+<body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="src/jquery.waterfall.min.js"></script>
+
+<div id="container" class="container"></div>
+
+<div id="end" style="display:none; font:60px bold; margin:0 auto; text-align:center;">End</div>
+
+<script type="text/javascript">
+    // 测试用技术器
+    var n = 0;
+
+
+    var wf = new Waterfall({
+        container: $('#container'),
+        colWidth: 200,
+        maxCol: 5,
+        preDistance: 0,
+        load: function(){
+            // 触发滚动加载时的具体操作
+            // 当前作用域下，this指向正创建的对象
+            var self = this;
+            //console.log('..load');
+
+            if (n > 5) {
+                self.end();     // 终止滚动load
+                $('#end').show();
+            }
+
+            $.get('more.php', function(data) {
+                n++;
+
+                var res = [];
+
+                $.each(data.items, function(i, item){
+                    res.push('<div class="item"><img src="' + item.src + '" width="200" height="' + item.h + '" /></div>');
+                });
+
+                self.success(res);
+            }, 'json');
+        }
+    });
+</script>
+</body>
+</html>
