@@ -7,4 +7,4 @@
 
 允许指定最小列数、最大列数、是否在浏览器窗口缩放的时候进行重排、加载处理等。
 
-使用实例及文档见 `docs`，`waterfall.html` 则是一个 demo。
+使用实例及文档见 [docs](docs/)，[waterfall.html](waterfall.html) 则是一个 demo。
